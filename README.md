@@ -2,7 +2,7 @@
 ## C code for CIS*2520: Data Structures S17
 
 ### Description
-Provided are the 4 labs& assignments completed for CIS*2520, Data Structures S17. The four data structures that were implemented were queues, hashtables, priority queues, and finally balanced AVL binary trees. All assignment structures were implemented in C, and were built in prior labs. Also explored was the use of ncurses, a programming library which provided a text based application interface.
+Provided are the 4 labs & assignments completed for CIS*2520, Data Structures S17. The four data structures that were implemented were queues, hashtables, priority queues, and finally balanced AVL binary trees. All assignment structures were implemented in C, and were built in prior labs. Also explored was the use of ncurses, a programming library which provided a text based application interface.
 
 #### Assignment One
 This program implements a traffic simulation program using queues. 
