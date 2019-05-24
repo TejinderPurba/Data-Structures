@@ -1,0 +1,39 @@
+****************************************************
+Tejinder Purba		0968799
+CIS 2520		Lab Assignment 2
+June 19th 2017		tpurba@mail.uoguelph.ca
+****************************************************
+
+************************
+Program Description
+**************************
+ This program implements the testing for a hash table,
+ along with the functions specififying the data being stored and
+ how to handle it
+
+************
+Compilation
+************
+ To compile this code:
+ run: make
+
+ To compile the cppcheck program:
+ run: make cppcheck
+
+ To compile the doxy program:
+ run: make doxy
+
+  Detailed Make options:
+
+  make compiles the testing.c program with the library
+  make cppcheck runs the cppcheck option
+  make doxy creates doxygen documentation in the docs directory
+  make clean removes executable files
+
+****************************
+Known Limitations, Issues and Errors
+****************************
+
+
+
+

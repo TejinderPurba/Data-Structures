@@ -1,0 +1,264 @@
+****************************************************
+Tejinder Purba		0968799
+CIS 2520		Assignment 3
+July 19th 2017		tpurba@mail.uoguelph.ca
+****************************************************
+
+**************************
+Program Description
+**************************
+ This program implements the main for a priority queue
+ minor emergency clinic
+
+***********************
+Compilation
+***********************
+ To compile the main clinic program:
+ run: make
+
+ To compile the base clinic program:
+ run: make base
+
+ To compile the test program:
+ run: make test
+
+ To compile the cppcheck program:
+ run: make cppcheck
+
+ To compile the doxy program:
+ run: make doxy
+
+ To compile the clean program:
+ run: make clean
+
+  Detailed Make options:
+
+  make compiles the priorityQueueMain.c program with the library
+  make base compiles the priorityQueueBase.c program with the library
+  make test compiles the testMain.c program with the library
+  make cppcheck runs the cppcheck option
+  make doxy creates doxygen documentation in the docs directory
+  make clean removes executable files
+
+***********************************************
+Known Limitations, Issues and Errors
+***********************************************
+ All commands are case-sensitive.
+
+ Any patient in the root node, i.e. the max, will be considered
+ processing, so they cannot be removed if in the root node.
+
+ Max client name is 100 characters.
+
+ New patients will only be added to queue once the current one is
+ finished processing in order to avoid priority clashes (i.e. lower priority
+ being processed and then higher priority added to queue). Instead, an
+ indicator will appear on the interface showing how many to be added to queue.
+
+ Starvation priority changes root node even though it is processing. This
+ has no effect on the program outcome.
+
+*****************************************
+Complexity
+******************************************
+
+ Queue *create(): O(N)
+ No matter the data inputted it will always take the same amount of time
+ to access the elements, allocate memory, and assign data. However, setting
+ each heap node to NULL increases linearly depending on the size of the queue.
+
+ void destroy(): O(N)
+ The amount of time to free and delete each node in the queue is
+ linearly dependant on the amount of nodes in the queue.
+
+ int isEmpty(): O(1)
+ The amount of time to access the size element of the queue will
+ always be the same.
+
+ void insert(): O(log(N))
+ The time to search and compare the parent and children in the heap
+ to perform heapify increases linearly as the size of the heap
+ increase exponentially. Allocating and assigning data to the memory
+ remains constant.
+
+ void removeMax(): O(log(N))
+ The time to search and compare the parent and children in the heap
+ to perform heapify increases linearly as the size of the heap
+ increase exponentially. Removing the data in the root remains
+ constant.
+ 
+ void starvation(): O(N)
+ The time to go through each node in the queue to assess its wait
+ time increases linearly, dependant on the amount of nodes in the
+ queue.
+
+*****************************************
+Testing
+*****************************************
+
+~~Testing Results:
+ 
+ Client Name - Priority - Symptom Code -  Final Priority
+ ---------------------------------------------------------------------------
+
+   testFile1:          testFile2:          testFile3:          testFile4:
+test1  1.0 GI 1.0   test1  1.0 SA 1.0   test1  1.0 SA 1.0   test1  1.0 SA 1.0
+test13 1.0 GI 1.0   test2  1.0 NC 1.0   test2  1.0 NC 1.0   test2  1.0 NC 1.0
+test2  1.0 GI 1.0   test4  1.0 MH 1.0   test4  1.0 MH 1.0   test4  1.0 MH 1.0
+test11 1.0 GI 1.0   test5  1.0 EC 1.0   test13 1.0 EC 1.0   test16 1.0 HN 1.0
+test10 1.0 GI 1.0   test3  1.0 CV 1.0   test9  1.0 HN 1.0   test5  1.0 EC 1.0
+test9  1.0 GI 1.0   test6  1.0 SA 1.0   test11 1.0 NC 1.0   test3  1.0 CV 1.0
+test4  1.0 GI 1.0   test7  1.0 GI 1.0   test5  1.0 EC 1.0   test6  1.0 SA 1.0
+test7  1.0 GI 1.0   test10 2.0 RC 2.0   test10 1.0 SA 1.0   test7  1.0 GI 1.0
+test6  1.0 GI 1.0   test9  2.0 SK 2.0   test3  1.0 CV 1.0   test9  2.0 SK 2.0
+test5  1.0 GI 1.0   test14 2.0 RC 2.0   test12 1.0 MH 1.0   test15 2.0 NC 2.0
+test8  1.0 GI 1.0   test12 2.0 TR 2.0   test15 2.0 MH 2.0   test8  2.0 TR 1.0
+test3  1.0 GI 1.0   test13 2.0 SK 2.0   test6  3.0 SA 3.0   test14 2.0 RC 1.0
+test12 5.0 GI 1.0   test15 2.0 NC 1.0   test8  3.0 RC 2.0   test13 4.0 SK 1.0
+                    test8  2.0 TR 1.0   test7  3.0 GI 1.0   test11 4.0 NC 1.0
+		    test11 2.0 NC 1.0   test14 5.0 MH 2.0   test12 5.0 TR 1.0
+                    test16 5.0 HN 1.0                       test19 1.0 MH 1.0
+                                                            test18 1.0 NC 1.0
+                                                            test17 1.0 TR 1.0
+                                                            test10 5.0 RC 1.0
+
+
+**Testing files can be found in the /assets folder**
+
+Each testing file served its own purpose regarding the testing of the starvation
+algorithm for the priority queue. The two pieces of data from the output
+shown that will be used to demonstrate the algorithms effectiveness are the
+"priority" and "final priority" columns, shown in columns 2 and 4 respectively.
+The algorithm relies on waitTime for each patient, once a certain threshold is
+reached, the patient begins to increase in priority. The waitTime is not shown,
+however is available in report.txt, once the data files provided are run
+through the priorityQueueMain.c program. Exact results as shown are not
+plausible as the process times are random.
+
+~~testFile1
+Tested the basic function of the algorithm with one instance of a low
+priority patient. This acted as a way to see if time spent waiting in the queue
+had the intended effect on the low priority patient. Since the patient was
+in the queue for a long time, the priority gradually increased to the highest.
+The final priority 1 for 'test12' shows that patient has been through multiple
+iterations of calling patients, enough time to become the highest. This is done
+with the same symptom codes to lessen the load on the algorithm.
+
+~~testFile2
+Tested whether the priority of a patient could go beyond 1,
+essentially breaking the priority scale. Since the priority is adjusted every
+patient iteration, more than 4 iterations would cause a patient of priority 5
+going to priority <1. After more that 5 iterations, patient 'test16' stayed
+at priority 1 without breaking.
+
+~~testFile3
+Tested whether priorities could be raised through the queue
+altogether effectively. The waitTime threshold wasnt reached until after
+patient 'test6' was finished. This meant the next patient, 'test8' would
+increase 1 priority, the next patient increase 2, and so on. These upgrades
+are achieved in testFile3 showing the algorithm is working as expected.
+
+~~testFile4
+Tested a mix of testFiles 1 to 3 combining all of the different
+elements. This data file also included adding patients to the list after
+patient 'test11' was treated. The patients added were 'test17', 'test18',
+and 'test19'. At this point, the lower priority patients
+were now at a higher priority, resulting in the new high priority patients
+being at the same level as the old.
+
+These data files are sufficient to test the algorithm, as they individually
+test each portion of the starvation algorithm, and then combine each test
+in the last testFile4 to get an accurate starvation algorithm test.
+A testMain.c file is available for simple testing of basic priority queue
+functions, unrelated to the starvation algorithm.
+
+******************************************
+Design
+******************************************
+
+~~Commentary:
+The starvation algorithm designed is reliant on the waiting time of each node.
+As the wait time increases and passes a certain threshold, the priority is
+increased respectively. The threshold in question is 600 minutes. At this
+point, the priority of the patient is increased by one, and continues to
+increase by one every iteration a patient is treated, until a max of
+priority 1 is achieved. At this point, the patient is well on its way
+to being the root node of the heap, and being treated. The algorithm is
+used every time the root node is deleted, and before the simulation
+can continue its timer. This allows the heap to be reheapified with the
+possible new priorities in case new patients are added, or a turn at the
+root is available.
+This design was chosen because unlike other algorithms, it treats the
+nodes as one unit. Some other algorithsm, such as 'processing 4 high priority
+and 2 low priority', have faults like possibly neglecting mid-priority
+nodes. This results in another starvation. The algorithm chosen makes sure
+the priority is raised for every node that is within the threshold value.
+The sources cited below indicated the same remedies, increasing the old nodes
+priorities will allow the nodes to "eventually be able to
+compete successfully with a newly-arrived process of much better basic
+priority". In conclusion, this design allows for universal prioritization
+of the priority queue.
+
+~~Additions:
+The additions that were made were addition 1, the user interface, and partly
+addition 3, the processing times. Addition 1 is implemented using the ncurses
+library, and includes a simulation clock, the ability to add and remove
+patients, and a wait time for each patient. Addition 3 is partly implemented
+by having cited sources for the processing times and a random element, and
+including the processing time to the final report, however it lacks in
+including statistics per complaint type. This is by default, to decrease
+the simulation load. Citations for the processing time below.
+
+~~Sources:
+
+Algorithm Design Sources:
+Page 2-
+-> https://www.cs.auckland.ac.nz/~alan/courses/os/book/6.Mana.13.starvation.pdf
+
+Page 3 & 6-
+-> http://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched-mlfq.pdf
+
+
+Processing Time Sources:
+Page 29 & 31-
+-> https://www.cihi.ca/en/hcic2012_ch2_en.pdf
+
+Page 5 & 6-
+-> https://www.cdc.gov/nchs/data/databriefs/db102.pdf
+
+******************************
+Output
+******************************
+
+~~How to Read the Report.txt:
+
+The report has 8 subheaders:
+Name, Symptom Code, Priority, Final Priority, Total Processing Time,
+Wait Time, Time Processed, and Finished Time.
+
+Name, Symptom Code, and Priority: are the details given in the input file,
+or entered via the UI.
+
+Final Priority: is the priority that is assigned to the patient after it
+goes through the starvation algorithm. If the priority was changed, it
+is shown respectively.
+
+Total Processing Time: is the time it takes for the patient to be treated.
+
+Wait Time: is the time the patient was in the queue, until it reached treating
+time.
+
+Time Processed: is the time the patient started treatment. This is similar
+to wait time, unless a patient was added after the simulation has started,
+at which time the wait time will be lower.
+
+Finished Time: is the time the patient is done treatment and removed
+from the queue.
+
+The client name is wrapped in square brackets '[ ]', and appears at the
+top of the data line for that specific client. Each client takes up one
+row, and is cut off from other clients above and below  with dashed lines.
+The vertical solid lines seperate the different stats within one client,
+in the order of the subheaders respectively.
+
+The simulation time is provided below the data in both hours and minutes.

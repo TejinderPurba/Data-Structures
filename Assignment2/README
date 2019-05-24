@@ -1,0 +1,148 @@
+****************************************************
+Tejinder Purba		0968799
+CIS 2520		Assignment 2
+June 26th 2017		tpurba@mail.uoguelph.ca
+****************************************************
+
+************************
+Program Description
+**************************
+ This program implements the main for a ncurses password
+ vault program using hashtables
+
+************
+Compilation
+************
+ To compile the main vault program:
+ run: make
+
+ To compile the test program:
+ run: make test
+
+ To compile the cppcheck program:
+ run: make cppcheck
+
+ To compile the doxy program:
+ run: make doxy
+
+ To compile the clean program:
+ run: make clean
+
+  Detailed Make options:
+
+  make compiles the hashTableMain.c program with the library
+  make test compiles the testMain.c program with the library
+  make cppcheck runs the cppcheck option
+  make doxy creates doxygen documentation in the docs directory
+  make clean removes executable files
+
+****************************
+Known Limitations, Issues and Errors
+****************************
+ All commands are case-sensitive.
+
+ File 'vault' cannot be opened for editing as that is the location
+ of the application master password.
+
+ The testing program uses a binary file called "TESTING123456". If any
+ file in the current directory is named this, it will be overwritten
+ and removed.
+
+ Maximum length for password and key strings are 999 characters.
+
+*************
+Complexity
+*************
+
+ HTable *createTable: O(N)
+ The time to malloc memory for the table remains constant no matter
+ the size, however, setting each value in the table to NULL increases
+ linearly depending on the size of the table.
+
+ Node *createNode: O(1)
+ The time to malloc memory for the node remains constant no matter
+ the data or key.
+
+ void destroyTable: O(N^2)
+ The time to cycle through each index in the table is linearly
+ dependant on the size of the table. However, each
+ initialized index requires another cycle through its nodes.
+
+ void insertData: O(N)
+ The more nodes there are in the index, the more time it will take
+ to cycle through all the nodes to find the end.
+
+ void updateData: O(N)
+ The more nodes there are in the index, the more time it will take
+ to cycle through all the nodes to find the end or related key.
+
+ void removeData: O(N)
+ The more nodes there are in the index, the more time it will take
+ to cycle through all the nodes to find the related key .
+
+ void *lookupData: O(N)
+ The more nodes there are in the index, the more time it will take
+ to cycle through all the nodes to find the related key.
+
+**********
+Testing
+**********
+
+ Hash Function:
+ The hash function sums the ascii values of each character in the
+ key string. If this value is greater than the size of the table,
+ the size of the table is subtracted from this value until it is
+ less than the size of the table. This method does not rely on a
+ constant, so the values are spread depending solely on the key
+ itself, and the size of the table if need be. If the keys are
+ similar, then the indexes will also be close together. This
+ results in different keys almost always being collision free. 
+
+ For example:
+ Table Size = 10:
+     -Gmail -- Index: 10
+     -YouTube -- Index: 7
+
+ Table Size = 100:
+     -Phone -- Index: 6
+     -LAPTOP -- Index: 64
+
+ Table Size = 1000:
+     -123123 -- Index: 300
+     -WeBcAM -- Index: 495
+     -Test -- Index: 16 
+     -Tesu -- Index: 17 (++one character difference = one index difference)
+
+ NCURSES:
+ To ensure the user cannot break the NCURSES UI, the user is
+ restricted to a certain amount of characters they can enter
+ during each prompt. Along with this, any invalid input is met
+ with a screen informing an invalid input is made. This is on
+ any screen with a prompt, and is present when attempting to
+ do any password management functions, such as attempting
+ to delete a password when no password file is open.
+
+**********
+Design
+**********
+
+ The design of the data store file for the password vault was to
+ implement the use of binary files. The user would be able to open
+ a binary file, and the structs containing the data would be copied
+ to and from the data file. There is also a main configuration file
+ which contains the master password for the program. The user will be
+ prompted to set up a master password upon program launch, and this
+ will be stored in a secondary file called "vault". The user is restricted
+ from opening any file called "vault" from the program. The master password
+ may be removed or updated after. There is no encryption on the binary files
+ created.
+ The strengths of this storage design is that it if fairly simple to
+ remove the file, create a new one with updated data, and read through
+ the file. This allows for quick manipulation and increases the program
+ speed as theres no need to decrypt the file before accessing it. 
+ A weakness would be that the file is not encrypted, so anyone with a
+ notepad tool could open the binary file to see the contents. Another
+ weakness would be the storage location of the password files. Since the
+ files are stored in the root of the application, they are easily accessible.
+ Having the files in a more secure location would make them more functional.
+ 

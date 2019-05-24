@@ -1,0 +1,2 @@
+C:\Users\Rikku\Google Drive\University\Summer 2017\CIS 2520\Assignments\Assignment4\src\binTreeMain.c:8:21: fatal error: ncurses.h: No such file or directory
+compilation terminated.

@@ -1,0 +1,169 @@
+****************************************************
+Tejinder Purba		0968799
+CIS 2520		Assignment 4
+August 6th 2017		tpurba@mail.uoguelph.ca
+****************************************************
+
+************************
+Program Description
+**************************
+ This program implements the main for a balanced AVL binary tree
+ based Point of Sale System
+
+************
+Compilation
+************
+ To compile the main POS program:
+ run: make
+
+ To compile the test program:
+ run: make test
+
+ To compile the cppcheck program:
+ run: make cppcheck
+
+ To compile the doxy program:
+ run: make doxy
+
+ To compile the clean program:
+ run: make clean
+
+  Detailed Make options:
+
+  make compiles the binTreeMain.c program with the library
+  make test compiles the testMain.c program with the library
+  make cppcheck runs the cppcheck option
+  make doxy creates doxygen documentation in the docs directory
+  make clean removes executable files
+
+****************************
+Known Limitations, Issues and Errors
+****************************
+ All commands are case-sensitive. Search functionality is also case and space-
+ sensitive.
+
+ The program startup command must contain a flag for which inventory state
+ to start up from. Use the '-i' flag to start from initial inventory state,
+ or '-c' to start from current inventory state. Ex. "bin/binTreeMain -i"
+
+ If product name is not found, closest matches will be given so user can
+ enter product ID instead. If product name given is a direct match, it will
+ be added or removed directly with no search menu. (i.e. searching "Mortal 
+ Kombat" will add/remove the game "Mortal Kombat" from inventory, instead of
+ showing results "Mortal Kombat & Mortal Kombat II & Mortal Kombat III").
+
+ The 'Games.csv' initial inventory filename is hardcoded and cannot be changed.
+ Likewise, the 'Games' binary storage file is hardcoded and cannot be changed.
+
+ The 'Games' binary inventory storage file is only created once a change to the
+ inventory is made. If the program is run, and then exited with no change to
+ the inventory, there will be no 'current' inventory state to run from.
+
+ The user is only able to remove an item from inventory before a new invoice
+ is started. This protects against products being removed while customers
+ have that product on their invoice.
+
+ The user is only able to add a file to inventory before a new invoice is
+ started. The format of the new file must be exactly the same as the
+ "Games.csv" file, being a csv itself. The file must be stored in the
+ /assets folder or it will not be found.
+ If the new file contains the same product already in the inventory, it
+ will be ignored, and the quantities or any other data will not be changed.
+
+*******************
+Complexity
+******************
+ Tree *createBalancedBinTree: O(1)
+ No matter the data inputted it will always take the same amount of time
+ to access the elements, allocate memory, and assign data.
+
+ TreeNode *createBalancedBinNode: O(1)
+ No matter the data inputted it will always take the same amount of time
+ to access the elements, allocate memory, and assign data.
+
+ void destroyBalancedBinTree: O(N)
+ The amount of time to free the data from each node increase linearly
+ dependant on the amount of nodes in the tree.
+
+ void treeInsertNode: O(NlogN)
+ The amount of time to traverse the tree to find the insertion location
+ would be logN as there is a choice of left or right subtree. However,
+ balancing the tree after insertion requires looking at all nodes, resulting
+ in the N.
+
+ void treeDeleteNode: O(NlogN)
+ The amount of time to traverse the tree to find the node to delete and
+ rearrange the pointers would be logN. However, balancing the tree after
+ deletion requires looking at all nodes, resulting in the N.
+ 
+ int treeIsEmpty: O(1)
+ It will always take the same amount of time to check the pointers in
+ the node for the given tree.
+
+ int treeHasTwoChildren: O(1)
+ It will always take the same amount of time to check the pointers in
+ the node for the given tree.
+
+ void *treeFindNode: O(logN)
+ The amount of time to traverse the tree to find the correct node
+ would be logN as the tree is balanced. Double the nodes is equal to
+ increasing the steps to the right solution by one.
+
+ void *treeFindMin: O(logN)
+ The amount of time to traverse the tree to find the min node
+ would be logN as the tree is balanced, and requires traversing
+ left numerous times.
+
+ void *treeFindMax: O(logN)
+ The amount of time to traverse the tree to find the max node
+ would be logN as the tree is balanced, and requires traversing
+ right numerous times.
+
+ void treeInOrderPrint: O(N)
+ The amount of time to traverse every node in the tree would be dependant
+ on the amount of nodes in the tree.
+
+ void treePreOrderPrint: O(N)
+ The amount of time to traverse every node in the tree would be dependant
+ on the amount of nodes in the tree.
+
+ void treePostOrderPrint: O(N)
+ The amount of time to traverse every node in the tree would be dependant
+ on the amount of nodes in the tree.
+
+******************
+Additions
+******************
+ The additions added were additions 1 & 4. Primarily addition 4.
+ 
+   1. "Read an additional inventory file while the system is running, 
+       adding the data from the file to the existing inventory. You choose 
+       the format of the data file."
+       
+   4. "Store the current inventory persistently as a binary file. 
+       Add flags to the program startup command to permit starting from 
+       either the current state of the inventory or from the initial state."
+
+   1.) This addition is available on the UI itself as a menu option. The
+       format for the additional inventory file is the exact same as the
+       'Games.csv' format. One starting header line explaining the order
+       of the information, followed by the data, one game info per line.
+       File format should also be a .csv file. The new file should be
+       in the /assets directory or it will not be found. Duplicate entries
+       will be ignored. (2 'moreInv' files in /assets folder to test);
+
+   4.) This addition is required upon program startup on the command line.
+       Using the flag '-i' without the quotes starts the program using
+       the initial inventory state. Using the flag '-c' without the quotes
+       starts the program using the current inventory state.
+       Ex.) "bin/binTreeMain -i" OR "bin/binTreeMain -c"
+
+
+*******************
+Credit
+*******************
+
+Idea for parser influenced by Filip Roseen. Parser further modified thereafter. 
+
+https://stackoverflow.com/questions/8705844/need-to-know-when-no-data-appears-between-two-token-separators-using-strtok
+

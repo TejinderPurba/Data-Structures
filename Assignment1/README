@@ -1,0 +1,89 @@
+****************************************************
+Tejinder Purba		0968799
+CIS 2520		Assignment 1
+June 5th 2017		tpurba@mail.uoguelph.ca
+****************************************************
+
+************************
+Program Description
+**************************
+ This program implements the main for a traffic simulation
+ program using queues
+
+************
+Compilation
+************
+ To compile the main simulation program:
+ run: make
+
+ To compile the test program:
+ run: make test
+
+ To compile the cppcheck program:
+ run: make cppcheck
+
+ To compile the doxy program:
+ run: make doxy
+
+ To compile the clean program:
+ run: make clean
+
+  Detailed Make options:
+
+  make compiles the queueMain.c program with the library
+  make test compiles the queueTesting.c program with the library
+  make cppcheck runs the cppcheck option
+  make doxy creates doxygen documentation in the docs directory
+  make clean removes executable files
+
+****************************
+Known Limitations, Issues and Errors
+****************************
+
+ In the circumstance of 2 cars reaching the front of
+ the queue at the same time, if they are headed in opposite
+ directions (eg. N & S), precedence will be given to the one
+ not going Left. If neither or both are going left, precedence
+ will be given to the one going either North, or East
+
+ In the circumstance of 3 cars reaching the front of
+ the queue at the same time, the car with an empty space
+ on its right hand side will take priority
+ 
+ In the circumstance of 4 cars reaching the front of the
+ queue at the same time, the priority will be N,S,E,W,
+ unless the car is going left, in which case the next
+ priority will be going, once again unless they are going left
+ etc
+
+ Wait time is calculated using the time the car arrived
+ in the queue, and the time at which the car enters the
+ intersection (processed time), rather than the finished 
+ time
+
+ The simulation is restricted to parse one character for
+ both direction and path, and up to 10 numbers for
+ the queue arrival data
+
+*************
+Complexity
+*************
+
+ Queue *create: O(1)
+ No matter the data inputted it will always take the same amount of time
+ to access the elements, allocate memory, and assign data.
+
+ void destroy: O(N)
+ The time to destroy the list is linearly proportional to the amount of data
+ in the list to destroy. As the data increases, the time to destroy and loop
+ through the list increases.
+
+ void enqueue: O(1)
+ No loop iterating necessary, it will always take the same amount of time to 
+ initialize nodes and insert void data in the back of a doubly-linked list.
+
+ void dequeue: O(1)
+ No loop iterating necessary, it will always take the same amount of time to remove
+ void data and free nodes in a list.
+
+

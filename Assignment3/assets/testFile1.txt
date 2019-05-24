@@ -1,0 +1,14 @@
+test1 1 GI
+test2 1 GI
+test3 1 GI
+test4 1 GI
+test5 1 GI
+test6 1 GI
+test7 1 GI
+test8 1 GI
+test9 1 GI
+test10 1 GI
+test11 1 GI
+test12 5 GI
+test13 1 GI
+

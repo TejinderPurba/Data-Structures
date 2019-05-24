@@ -1,0 +1,20 @@
+test1 1 SA
+test2 1 NC
+test3 1 CV
+test4 1 MH
+test5 1 EC
+test6 1 SA
+test7 1 GI
+test8 2 TR
+test9 2 SK
+test10 5 RC
+test11 4 NC
+test12 5 TR
+test13 4 SK
+test14 2 RC
+test15 2 NC
+test16 1 HN
+
+
+
+
